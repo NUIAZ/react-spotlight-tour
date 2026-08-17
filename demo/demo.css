@@ -1,0 +1,484 @@
+/**
+ * Demo-site styling only. None of this ships in the package — the library's own
+ * stylesheet is `src/spotlight-tour.css`, and the only part of this file that
+ * touches the tour is the `.midnight-tour` theme block at the bottom, which is
+ * there to prove that theming really is nothing but CSS custom properties.
+ */
+
+:root {
+  --ink: #0f1220;
+  --ink-soft: #4a5068;
+  --paper: #f7f8fc;
+  --card: #ffffff;
+  --line: rgb(15 18 32 / 10%);
+  --brand: #3b6cff;
+  --brand-deep: #1f47c4;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px 64px;
+}
+
+/* ---- masthead ------------------------------------------------------------ */
+
+.masthead {
+  padding: 56px 0 32px;
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-deep);
+  margin: 0 0 10px;
+}
+
+.masthead h1 {
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+}
+
+.lede {
+  max-width: 62ch;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+}
+
+.masthead-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.masthead-status {
+  margin: 14px 0 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.cta {
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  background: var(--brand);
+  color: #fff;
+  cursor: pointer;
+}
+
+.cta:hover {
+  background: var(--brand-deep);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--brand-deep);
+  outline-offset: 2px;
+}
+
+.cta-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+  border-color: var(--line);
+}
+
+.cta-ghost:hover {
+  background: rgb(15 18 32 / 4%);
+  color: var(--ink);
+}
+
+.cta-small {
+  font-size: 0.82rem;
+  padding: 0.45rem 0.85rem;
+}
+
+/* ---- the fictional dashboard --------------------------------------------- */
+
+.demo-app {
+  position: relative;
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 34px rgb(15 18 32 / 8%);
+}
+
+.app-nav {
+  background: #12162b;
+  color: #cbd2f0;
+  padding: 18px 14px;
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 18px;
+}
+
+.app-brand-mark {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: linear-gradient(140deg, #6ea8ff, #a78bfa);
+}
+
+.nav-item {
+  display: block;
+  padding: 7px 10px;
+  border-radius: 7px;
+  color: #aab3dc;
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+
+.nav-item:hover {
+  background: rgb(255 255 255 / 7%);
+  color: #fff;
+}
+
+.nav-item.is-current {
+  background: rgb(110 168 255 / 18%);
+  color: #fff;
+}
+
+.app-main {
+  padding: 18px 20px 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.app-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.app-title {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.app-account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.7rem 0.35rem 0.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #fbfcff;
+}
+
+.tile-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.tile-label {
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+}
+
+.chart-card {
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 14px;
+  background: #fbfcff;
+}
+
+.chart-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.chart-head h3 {
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.chart-legend {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 96px;
+}
+
+.bar {
+  flex: 1 1 0;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, #6ea8ff, #3b6cff);
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding: 10px 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #22c55e;
+}
+
+.app-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 210px;
+  padding: 16px;
+  background: #fff;
+  border-left: 1px solid var(--line);
+  box-shadow: -14px 0 30px rgb(15 18 32 / 8%);
+}
+
+.app-drawer h3 {
+  margin: 0 0 10px;
+  font-size: 0.9rem;
+}
+
+.app-drawer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.saved-view {
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  background: #fbfcff;
+}
+
+/* ---- examples ------------------------------------------------------------ */
+
+.examples {
+  margin-top: 48px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  letter-spacing: -0.015em;
+  margin: 0 0 6px;
+}
+
+.section-sub {
+  color: var(--ink-soft);
+  margin: 0 0 24px;
+  max-width: 62ch;
+}
+
+.example {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 20px 20px;
+  margin-bottom: 18px;
+}
+
+.example-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.example-head h3 {
+  font-size: 1.06rem;
+  margin: 0;
+}
+
+.example-blurb {
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+  max-width: 72ch;
+}
+
+.example-note {
+  margin: 0 0 14px;
+  padding: 9px 12px;
+  border-left: 3px solid var(--brand);
+  background: rgb(59 108 255 / 6%);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.88rem;
+  color: var(--ink);
+  max-width: 72ch;
+}
+
+.code-wrap {
+  position: relative;
+}
+
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 7px;
+  border: 1px solid rgb(255 255 255 / 22%);
+  background: rgb(255 255 255 / 10%);
+  color: #e8ecff;
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  background: rgb(255 255 255 / 20%);
+}
+
+.code {
+  margin: 0;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: #12162b;
+  color: #d8def7;
+  font-family: var(--mono);
+  font-size: 0.79rem;
+  line-height: 1.65;
+  /* Long lines scroll inside the block rather than widening the page. */
+  overflow-x: auto;
+}
+
+/* Pinned to the bottom-left corner of the viewport. The placement example
+   targets this precisely because it has zero room on its left and below. */
+.edge-pill {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 6px 12px;
+  border-radius: 0 8px 0 0;
+  background: #12162b;
+  color: #aab3dc;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+}
+
+.footer {
+  margin-top: 44px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+/* ---- narrow screens ------------------------------------------------------ */
+
+@media (max-width: 720px) {
+  .demo-app {
+    grid-template-columns: 1fr;
+  }
+
+  .tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .app-drawer {
+    position: static;
+    width: auto;
+    border-left: none;
+    border-top: 1px solid var(--line);
+    box-shadow: none;
+  }
+}
+
+/* ---- the theming example ------------------------------------------------- */
+/* This is the entire "custom theme" from the last example on the page. Nothing
+   but --rst-* custom properties; no JavaScript is involved. */
+
+.midnight-tour {
+  --rst-accent: #a78bfa;
+  --rst-accent-fg: #17102b;
+  --rst-scrim: rgb(9 6 20 / 82%);
+  --rst-callout-bg: #1b1630;
+  --rst-callout-fg: #f4f1ff;
+  --rst-callout-muted: #b6acd8;
+  --rst-callout-border: rgb(167 139 250 / 35%);
+  --rst-callout-shadow: 0 20px 50px rgb(5 2 15 / 65%);
+  --rst-callout-radius: 16px;
+  --rst-radius: 12px;
+}

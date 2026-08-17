@@ -1,0 +1,329 @@
+/**
+ * react-spotlight-tour — the entire stylesheet.
+ *
+ * Import it once, anywhere:
+ *
+ *   import 'react-spotlight-tour/styles.css';
+ *
+ * ## Why a plain CSS file rather than CSS-in-JS
+ *
+ * A styling runtime would be the library's only dependency, would need its own
+ * SSR story, and would force every consumer onto the same styling stack. One
+ * static file has none of those costs, and the theming hooks below make it as
+ * malleable as a styled component without any of the machinery.
+ *
+ * ## Theming
+ *
+ * Every colour, size and duration is a `--rst-*` custom property with a
+ * sensible default via `var(--x, fallback)`. Override them anywhere that wins
+ * the cascade — `:root` for global theming, or a class passed through the
+ * `className` prop for a scoped variant:
+ *
+ *   .my-brand-tour {
+ *     --rst-accent: #7c5cff;
+ *     --rst-callout-bg: #14121f;
+ *     --rst-callout-fg: #f2f0ff;
+ *     --rst-scrim: rgb(8 6 20 / 78%);
+ *   }
+ *
+ * ## How the hole is made
+ *
+ * The "hole" is not a mask and not four dimming panels: it is one
+ * absolutely-positioned box carrying an enormous box-shadow spread. Everything
+ * outside the box gets the wash and the box itself stays untouched, which means
+ * it animates between targets as a single element and degrades gracefully. The
+ * ring is a *border* rather than a second shadow, because an outward spread
+ * would paint straight over the outer wash.
+ *
+ * The spread is `200vmax`, **not** a fixed `9999px`. That is not a style
+ * preference — it is a performance fix. A 9999px spread asks the compositor to
+ * rasterise a ~20000x20000px shadow, and because the ring animates between
+ * targets it has to do so repeatedly; on a large or high-DPI display that is
+ * gigabytes of raster work per transition and it will visibly wedge the main
+ * thread. `200vmax` scales with the viewport, is still guaranteed to cover the
+ * whole screen (twice over, so a ring scrolled an entire viewport off-screen
+ * still washes everything), and costs roughly a twentieth of the area.
+ */
+
+.rst-overlay {
+  /* ---- theming surface ------------------------------------------------- */
+  --rst-scrim-color: var(--rst-scrim, rgb(15 18 25 / 72%));
+  --rst-ring-color: var(--rst-accent, #3b82f6);
+  --rst-ring-width: var(--rst-ring-thickness, 2px);
+  --rst-ring-radius: var(--rst-radius, 8px);
+  --rst-card-bg: var(--rst-callout-bg, #ffffff);
+  --rst-card-fg: var(--rst-callout-fg, #101828);
+  --rst-card-muted: var(--rst-callout-muted, #667085);
+  --rst-card-border-color: var(--rst-callout-border, rgb(16 24 40 / 10%));
+  --rst-card-radius: var(--rst-callout-radius, 12px);
+  --rst-card-shadow: var(--rst-callout-shadow, 0 18px 40px rgb(16 24 40 / 24%));
+  --rst-card-width: var(--rst-callout-width, 360px);
+  --rst-motion: var(--rst-transition, 0.25s ease);
+  /* See the header note: viewport-relative, not a fixed 9999px. */
+  --rst-wash-spread: var(--rst-scrim-spread, 200vmax);
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--rst-z-index, 1500);
+  font-family: var(--rst-font, inherit);
+}
+
+/* Catches clicks so the page underneath cannot be interacted with from beneath
+   the tour. Dim on its own while a step is still resolving; transparent once a
+   ring is drawn, because the ring's shadow already supplies the wash. */
+.rst-scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--rst-scrim-color);
+}
+
+.rst-overlay.rst-has-spotlight .rst-scrim {
+  background: transparent;
+}
+
+/* ---- the hole ----------------------------------------------------------- */
+
+.rst-spotlight {
+  position: fixed;
+  box-sizing: border-box;
+  border: var(--rst-ring-width) solid var(--rst-ring-color);
+  border-radius: var(--rst-ring-radius);
+  box-shadow: 0 0 0 var(--rst-wash-spread) var(--rst-scrim-color);
+  /* The scrim beneath handles interaction; the ring must never eat a click. */
+  pointer-events: none;
+  transition:
+    top var(--rst-motion),
+    left var(--rst-motion),
+    width var(--rst-motion),
+    height var(--rst-motion);
+}
+
+/* ---- callout ------------------------------------------------------------ */
+
+.rst-callout {
+  position: fixed;
+  box-sizing: border-box;
+  width: min(var(--rst-card-width), calc(100vw - 24px));
+  background: var(--rst-card-bg);
+  color: var(--rst-card-fg);
+  border: 1px solid var(--rst-card-border-color);
+  border-radius: var(--rst-card-radius);
+  box-shadow: var(--rst-card-shadow);
+  padding: 1rem 1.1rem 0.9rem;
+  transition:
+    top var(--rst-motion),
+    left var(--rst-motion);
+}
+
+/* Focus lands here on every step. The card is already the loudest thing on the
+   screen, so a focus ring on it would be noise — the controls inside keep
+   theirs, which is where a keyboard user actually needs the signal. */
+.rst-callout:focus {
+  outline: none;
+}
+
+.rst-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.rst-count {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rst-card-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.rst-skip {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: 0.72rem;
+  color: var(--rst-card-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rst-skip:hover {
+  color: var(--rst-card-fg);
+}
+
+.rst-title {
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.35;
+  margin: 0 0 0.4rem;
+  color: var(--rst-card-fg);
+}
+
+.rst-body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--rst-card-muted);
+  margin: 0 0 0.85rem;
+}
+
+.rst-body p {
+  margin: 0 0 0.6rem;
+}
+
+.rst-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- progress pips ------------------------------------------------------ */
+
+.rst-pips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 0.85rem;
+}
+
+.rst-pip {
+  height: 3px;
+  flex: 1 1 0;
+  min-width: 8px;
+  border-radius: 2px;
+  background: var(--rst-card-border-color);
+  transition: background-color 0.2s ease;
+}
+
+.rst-pip-done {
+  background: color-mix(in srgb, var(--rst-ring-color) 45%, transparent);
+}
+
+.rst-pip-current {
+  background: var(--rst-ring-color);
+}
+
+/* ---- actions ------------------------------------------------------------ */
+
+.rst-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.rst-button {
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.5rem 0.9rem;
+  border-radius: calc(var(--rst-card-radius) - 4px);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.rst-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* A visible focus ring on the controls is non-negotiable: this is a modal
+   dialog a keyboard user is expected to operate without a mouse. */
+.rst-button:focus-visible,
+.rst-skip:focus-visible {
+  outline: 2px solid var(--rst-ring-color);
+  outline-offset: 2px;
+}
+
+.rst-button-ghost {
+  background: transparent;
+  color: var(--rst-card-muted);
+  border-color: var(--rst-card-border-color);
+}
+
+.rst-button-ghost:hover:not(:disabled) {
+  color: var(--rst-card-fg);
+  border-color: var(--rst-card-muted);
+}
+
+.rst-button-primary {
+  background: var(--rst-ring-color);
+  color: var(--rst-accent-fg, #ffffff);
+}
+
+.rst-button-primary:hover {
+  filter: brightness(1.08);
+}
+
+/* ---- screen-reader-only announcement ------------------------------------ */
+/* Clipped rather than `display: none`, which would remove it from the
+   accessibility tree and silence the live region entirely. */
+.rst-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- reduced motion ----------------------------------------------------- */
+/* The spotlight jumps between targets instead of sliding. Movement across the
+   whole viewport is exactly the kind this setting exists to stop. Both the
+   media query and the class are used: the query covers CSS-only consumers, the
+   class covers a host that fakes the preference for testing or a settings
+   toggle. */
+@media (prefers-reduced-motion: reduce) {
+  .rst-spotlight,
+  .rst-callout,
+  .rst-pip {
+    transition: none;
+  }
+}
+
+.rst-overlay.rst-reduced-motion .rst-spotlight,
+.rst-overlay.rst-reduced-motion .rst-callout,
+.rst-overlay.rst-reduced-motion .rst-pip {
+  transition: none;
+}
+
+/* ---- narrow viewports --------------------------------------------------- */
+/* Below the phone breakpoint there is no room to sit a card beside anything,
+   so it docks to the bottom of the screen and the inline placement is ignored.
+   The spotlight itself still rings the target, which is the part that carries
+   the meaning. */
+@media (max-width: 575.98px) {
+  .rst-callout {
+    top: auto !important;
+    left: 12px !important;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+  }
+}
+
+/* ---- forced colours ----------------------------------------------------- */
+/* Windows high-contrast mode drops background colours, which would leave the
+   card as floating text over the page. An explicit border and system colours
+   keep it legible. */
+@media (forced-colors: active) {
+  .rst-callout {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  .rst-spotlight {
+    border-color: Highlight;
+  }
+}

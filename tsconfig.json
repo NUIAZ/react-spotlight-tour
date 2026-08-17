@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "useDefineForClassFields": true,
+
+    /* Strictness. The library ships .d.ts into other people's builds, so
+       anything loose here becomes their problem rather than ours, and `any` is
+       banned outright. */
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Declarations are emitted by vite-plugin-dts during `npm run build`, not
+       by a bare `tsc` run — `noEmit` here keeps `npm run typecheck` a pure
+       check with no side effects on dist/. */
+    "declaration": true,
+    "declarationMap": true,
+    "noEmit": true,
+
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["node", "vitest/globals"],
+
+    /* The demo imports the library by its published name so the examples on the
+       site are copy-pasteable verbatim. This maps that name back to source, and
+       mirrors the alias in vite.demo.config.ts. */
+    "baseUrl": ".",
+    "paths": {
+      "react-spotlight-tour": ["./src/index.ts"]
+    }
+  },
+  "include": ["src", "demo", "vite.config.ts", "vite.demo.config.ts"]
+}
