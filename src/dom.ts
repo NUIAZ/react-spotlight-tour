@@ -11,7 +11,7 @@ import type { TourTarget } from './types';
  * The function form is invoked defensively: it is authored by the consumer and
  * may reach into a ref that is momentarily undefined, or index an array that
  * has not loaded. A throw here would take down the host app's render, while the
- * caller already knows exactly what to do with "not found" — wait, then skip.
+ * caller already knows exactly what to do with "not found": wait, then skip.
  */
 export function resolveTarget(target: TourTarget): Element | null {
   try {
@@ -59,7 +59,7 @@ const FOCUSABLE_SELECTOR = [
 ].join(',');
 
 /**
- * The tab stops inside `root`, in document order — which for a callout with no
+ * The tab stops inside `root`, in document order, which for a callout with no
  * positive `tabIndex` is also tab order.
  *
  * Matches `FOCUSABLE_SELECTOR` above (links with `href`, enabled
@@ -73,7 +73,7 @@ const FOCUSABLE_SELECTOR = [
  * depends on the `inert` attribute and on shadow roots, neither of which
  * `querySelectorAll` crosses or evaluates. This is acceptable here only because
  * the argument is always the tour's own callout, whose controls are ours and are
- * either rendered or absent — do not lift this into a general-purpose focus-trap
+ * either rendered or absent; do not lift this into a general-purpose focus-trap
  * helper without adding a visibility check.
  *
  * Returns a new array each call; the focus trap re-queries on every Tab rather

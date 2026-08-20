@@ -5,7 +5,7 @@
  * ("Aurora") that gives the tours something real to point at, and a list of
  * worked examples underneath it. Every "Try it" button drives the *same* mounted
  * overlay with a different step list, which is also the recommended shape for a
- * real app — one `<SpotlightTour>` near the root, many possible tours.
+ * real app: one `<SpotlightTour>` near the root, many possible tours.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
@@ -28,7 +28,7 @@ const DEMO_SEEN_KEY = makeSeenKey(DEMO_STORAGE_KEY, 1);
  * `<SpotlightTour>` every example drives.
  *
  * Two things here are worth copying into a real app rather than treating as demo
- * scaffolding. One overlay is mounted for all five step lists, swapped by state —
+ * scaffolding. One overlay is mounted for all five step lists, swapped by state;
  * mounting one per tour would put several dialogs and several focus traps on the
  * page at once. And starting a tour is split in two: the click handler selects
  * the example and bumps a counter, an effect keyed on that counter calls
@@ -36,7 +36,7 @@ const DEMO_SEEN_KEY = makeSeenKey(DEMO_STORAGE_KEY, 1);
  * looks for the first target.
  *
  * The drawer state lives here because the side-effects example's `onEnter`/
- * `onExit` toggle it — that is the demo showing that a step can create the
+ * `onExit` toggle it; that is the demo showing that a step can create the
  * element it is about to spotlight.
  */
 export default function App() {
@@ -159,7 +159,7 @@ export default function App() {
         id: 'metrics',
         target: '[data-tour="metrics"]',
         title: 'Nothing unusual yet',
-        content: 'Press Next — the drawer holding the following target is still closed.',
+        content: 'Press Next; the drawer holding the following target is still closed.',
         placement: 'bottom',
       },
       {
@@ -236,7 +236,7 @@ export default function App() {
           </div>
           <p className="masthead-status" role="status">
             {tour.isActive
-              ? `Tour running — step ${tour.stepIndex + 1} of ${tour.stepCount}`
+              ? `Tour running: step ${tour.stepIndex + 1} of ${tour.stepCount}`
               : 'No tour running.'}
           </p>
         </div>
@@ -313,7 +313,7 @@ export default function App() {
           </div>
         </main>
 
-        {/* Only in the DOM while open — which is exactly what makes it a
+        {/* Only in the DOM while open, which is exactly what makes it a
             worthwhile target for the onEnter example. */}
         {drawerOpen && (
           <aside className="app-drawer" aria-label="Saved views">
@@ -398,7 +398,7 @@ const BAR_HEIGHTS = [
  * A code block with a copy button.
  *
  * `navigator.clipboard` is not available on insecure origins, so the failure
- * path is handled rather than swallowed — a copy button that silently does
+ * path is handled rather than swallowed; a copy button that silently does
  * nothing is worse than one that admits it.
  */
 function CodeBlock({ code, label }: { code: string; label: string }) {

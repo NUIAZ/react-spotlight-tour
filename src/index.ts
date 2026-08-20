@@ -18,7 +18,7 @@ export type { SpotlightTourProps } from './SpotlightTour';
 
 export { useTour } from './useTour';
 
-// Imperative control. Usable from anywhere — including outside React — which is
+// Imperative control. Usable from anywhere (including outside React), which is
 // the whole reason the state lives in a module and not in context.
 export { startTour, stopTour, moveTour, goToStep, subscribeTour, getTourState } from './store';
 export type { TourState } from './store';

@@ -1,7 +1,7 @@
 /**
  * The source code shown in each example's copy-able block.
  *
- * These strings are kept beside — not generated from — the live step objects in
+ * These strings are kept beside (not generated from) the live step objects in
  * `App.tsx`. Generating them would produce `[Function]` for the interesting
  * parts (`onEnter`, function targets) and would drop the comments, which are
  * the bit a reader actually wants. The trade-off is that the two must be edited
@@ -16,7 +16,7 @@ export type ExampleId = 'basic' | 'placement' | 'missing' | 'sideEffects' | 'the
  * `id` is the join key: the same value names a memoised step list in `App.tsx`,
  * so an entry here with no matching list renders a "Try it" button that starts
  * nothing. `code` is the display copy of that step list, hand-maintained rather
- * than derived — see the file header for why — and is what the copy button hands
+ * than derived (see the file header for why) and is what the copy button hands
  * over verbatim, so it has to stand alone as pasteable source.
  */
 export interface Example {
@@ -36,7 +36,7 @@ export interface Example {
  * you asked for, a missing target being skipped rather than stalling, `onEnter`
  * creating its own target), then theming.
  *
- * Array order is presentation order, and `ExampleId` is exhaustive over it — the
+ * Array order is presentation order, and `ExampleId` is exhaustive over it: the
  * union, this array and `App.tsx`'s step lists all have to be edited together.
  */
 export const EXAMPLES: Example[] = [
@@ -94,7 +94,7 @@ export function App() {
     id: 'placement',
     title: 'Placement, and what happens when it does not fit',
     blurb:
-      'The first two steps ask for a side that cannot possibly work: they target the little version pill welded to the bottom-left corner of the window, then request "left" and "bottom". Placement is a preference, not an instruction — the overlay flips to the opposite side, then tries the other axis, and only overlaps the target if literally nothing fits. The third step asks for a side that does have room, and gets it.',
+      'The first two steps ask for a side that cannot possibly work: they target the little version pill welded to the bottom-left corner of the window, then request "left" and "bottom". Placement is a preference, not an instruction: the overlay flips to the opposite side, then tries the other axis, and only overlaps the target if literally nothing fits. The third step asks for a side that does have room, and gets it.',
     note: 'The callout reports where it actually landed in its data-placement attribute, so you can verify the flip rather than take our word for it.',
     code: `const steps = [
   {
@@ -127,13 +127,13 @@ export function App() {
     id: 'missing',
     title: 'A step whose target is not there',
     blurb:
-      'The middle step points at an element this page never renders — the everyday case of a panel that only exists when data does, or chrome a narrow viewport hides. The step gets a short grace period to appear and is then skipped in whichever direction the reader was travelling. A tour frozen on a blank spotlight is the failure mode that makes the whole feature look broken.',
+      'The middle step points at an element this page never renders: the everyday case of a panel that only exists when data does, or chrome a narrow viewport hides. The step gets a short grace period to appear and is then skipped in whichever direction the reader was travelling. A tour frozen on a blank spotlight is the failure mode that makes the whole feature look broken.',
     note: 'Run it, then press Next: you land on step 3 directly. Press Back from there and step 2 is skipped again, this time backwards.',
     code: `const steps = [
   { id: 'one', target: '[data-tour="metrics"]', title: 'Step one', content: 'This one exists.' },
   {
     id: 'two',
-    // Nothing on the page matches this. It is not an error — it is Tuesday.
+    // Nothing on the page matches this. It is not an error; it is Tuesday.
     target: '[data-tour="quarterly-forecast"]',
     title: 'Step two',
     content: 'You will never read this.',
@@ -150,7 +150,7 @@ export function App() {
     id: 'sideEffects',
     title: 'onEnter that creates its own target',
     blurb:
-      'The second step points inside a drawer that is closed when the tour starts. Its onEnter opens the drawer and its onExit closes it again. This works because onEnter runs before the target is looked up — the ordering is the entire point of the hook, since the most common job for it is opening the thing about to be spotlighted.',
+      'The second step points inside a drawer that is closed when the tour starts. Its onEnter opens the drawer and its onExit closes it again. This works because onEnter runs before the target is looked up; the ordering is the entire point of the hook, since the most common job for it is opening the thing about to be spotlighted.',
     note: 'Watch the drawer slide open on step 2, and close again when you move on or leave.',
     code: `const steps = [
   { id: 'metrics', target: '[data-tour="metrics"]', title: 'Start here', content: 'Nothing unusual.' },
@@ -174,7 +174,7 @@ export function App() {
     title: 'Theming with CSS custom properties',
     blurb:
       'No CSS-in-JS and no theme prop: the stylesheet is driven entirely by --rst-* custom properties, so a scoped class passed through className restyles the whole overlay. This example swaps the accent, the card colours and the scrim for a dark, high-contrast variant.',
-    note: 'Only CSS changed — the step list is the basic one from the first example.',
+    note: 'Only CSS changed; the step list is the basic one from the first example.',
     code: `/* styles.css */
 .midnight-tour {
   --rst-accent: #a78bfa;
@@ -189,7 +189,7 @@ export function App() {
   --rst-radius: 12px;
 }
 
-/* Anywhere in the tree — the class lands on the overlay root. */
+/* Anywhere in the tree: the class lands on the overlay root. */
 <SpotlightTour steps={steps} className="midnight-tour" />`,
   },
 ];

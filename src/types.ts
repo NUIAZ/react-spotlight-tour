@@ -1,8 +1,8 @@
 /**
  * Public types for react-spotlight-tour.
  *
- * Everything a consumer writes by hand — the step list, the labels, the
- * callbacks — is declared here rather than beside the component that renders
+ * Everything a consumer writes by hand (the step list, the labels, the
+ * callbacks) is declared here rather than beside the component that renders
  * it. Content and machinery are separate concerns: a step list is data that
  * product people review, and it should be readable without opening the
  * overlay's source.
@@ -64,7 +64,7 @@ export interface TourStep {
   /**
    * Stable identifier. Used as the React key, as the seed for the callout's
    * `aria-labelledby`/`aria-describedby` ids, and as the value reported to
-   * `onStepChange` — so keep it stable across releases even if the copy changes.
+   * `onStepChange`, so keep it stable across releases even if the copy changes.
    */
   id: string;
 
@@ -84,7 +84,7 @@ export interface TourStep {
   placement?: TourPlacement;
 
   /**
-   * Route this step lives on. Purely a value the tour hands to `onNavigate` —
+   * Route this step lives on. Purely a value the tour hands to `onNavigate`;
    * this library never imports a router. Steps that point at persistent chrome
    * (a top bar, a sidebar) leave it undefined and run wherever the reader is.
    */
@@ -101,7 +101,7 @@ export interface TourStep {
   onEnter?: (context: TourStepContext) => void;
 
   /**
-   * Runs when the step stops being current — including when the tour ends or
+   * Runs when the step stops being current, including when the tour ends or
    * unmounts while sitting on it. Use it to undo whatever `onEnter` did.
    */
   onExit?: (context: TourStepContext) => void;

@@ -19,7 +19,7 @@
  *    router. A step declares `route`, and if it differs from the `currentRoute`
  *    prop the tour calls `onNavigate(route)` and waits for `currentRoute` to
  *    change. That makes the same build work under react-router, Next.js, TanStack
- *    Router, or no router at all — which is the common case for a settings
+ *    Router, or no router at all, which is the common case for a settings
  *    dialog tour.
  *
  * 3. **The scrim is one box-shadow, not a mask or four divs.** The spotlight is
@@ -29,7 +29,7 @@
  *    "everything dimmed" if the geometry is ever wrong.
  *
  * 4. **`onEnter` fires before target resolution.** Its main job is to *create*
- *    the target — open the drawer, expand the accordion, switch the tab. Firing
+ *    the target: open the drawer, expand the accordion, switch the tab. Firing
  *    it after resolution would guarantee the element was never there in time.
  *
  * 5. **There is always a way out.** Escape, the Skip control, and (optionally)
@@ -128,7 +128,7 @@ export interface SpotlightTourProps {
   /**
    * CSS selector that must exist before auto-start fires.
    *
-   * The point is to wait for real content instead of a loading skeleton —
+   * The point is to wait for real content instead of a loading skeleton;
    * auto-starting any earlier lands the very first spotlight on a spinner.
    * Polled until `autoStartTimeoutMs`; if it never appears the tour stays
    * quiet, because spotlighting an error state helps nobody.
@@ -152,7 +152,7 @@ export interface SpotlightTourProps {
   storageKey?: string;
 
   /**
-   * Version of the walkthrough. Bumping it re-plays the tour for everyone —
+   * Version of the walkthrough. Bumping it re-plays the tour for everyone;
    * see the guidance on {@link makeSeenKey} before you do.
    */
   version?: number;
@@ -188,7 +188,7 @@ export interface SpotlightTourProps {
   /** Overrides for the user-visible strings. Merged over the English defaults. */
   labels?: Partial<TourLabels>;
 
-  /** Extra class on the overlay root — the hook for scoped theming. */
+  /** Extra class on the overlay root, the hook for scoped theming. */
   className?: string;
 
   /**
@@ -296,8 +296,8 @@ export function SpotlightTour({
     current.onEnter?.(context);
     onStepChangeRef.current?.(current, index);
 
-    // The cleanup covers every way of leaving a step — Next, Back, Escape,
-    // unmount — which is exactly the contract `onExit` should have.
+    // The cleanup covers every way of leaving a step (Next, Back, Escape,
+    // unmount), which is exactly the contract `onExit` should have.
     return () => {
       current.onExit?.(context);
     };
@@ -325,7 +325,7 @@ export function SpotlightTour({
 
     const list = stepsRef.current;
     const current = list[index];
-    // Walked off either end of the list — treat it as a finished tour rather
+    // Walked off either end of the list: treat it as a finished tour rather
     // than rendering an empty overlay.
     if (current === undefined) {
       stopTour(index >= list.length ? 'completed' : 'dismissed');
@@ -362,7 +362,7 @@ export function SpotlightTour({
 
       if (Date.now() >= deadline) {
         // Gone for good. Keep moving in the reader's direction of travel
-        // instead of holding them on an empty spotlight — see the file header.
+        // instead of holding them on an empty spotlight; see the file header.
         const next = index + direction;
         if (next < 0 || next >= list.length) {
           stopTour(direction === 1 ? 'completed' : 'dismissed');
@@ -604,7 +604,7 @@ export function SpotlightTour({
       cancelled = true;
       window.clearTimeout(timer);
     };
-    // Mount-only by design — see the comment above.
+    // Mount-only by design; see the comment above.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

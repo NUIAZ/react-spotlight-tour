@@ -1,5 +1,5 @@
 /**
- * Demo-site styling only. None of this ships in the package — the library's own
+ * Demo-site styling only. None of this ships in the package; the library's own
  * stylesheet is `src/spotlight-tour.css`, and the only part of this file that
  * touches the tour is the `.midnight-tour` theme block at the bottom, which is
  * there to prove that theming really is nothing but CSS custom properties.

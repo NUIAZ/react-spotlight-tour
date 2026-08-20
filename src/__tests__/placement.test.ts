@@ -25,7 +25,7 @@ describe('placeCallout', () => {
 
   it('flips to the opposite side when the preferred side would overflow', () => {
     // A target hard against the bottom edge: a card below it cannot fit, so the
-    // natural mirror — above — must be chosen.
+    // natural mirror (above) must be chosen.
     const target: SpotRect = { top: 760, left: 500, width: 120, height: 30 };
     const result = placeCallout(target, CARD, VIEWPORT, 'bottom');
 
@@ -60,7 +60,7 @@ describe('placeCallout', () => {
 
   it('keeps the card fully on screen when no side fits cleanly', () => {
     // A card almost as tall as the viewport, next to a centred target: every
-    // candidate clips. The preference is kept but pulled back into view —
+    // candidate clips. The preference is kept but pulled back into view;
     // overlapping the target beats hanging off the edge of the screen.
     const tallCard = { width: 320, height: 740 };
     const narrowViewport = { width: 700, height: 800 };

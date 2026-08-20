@@ -7,7 +7,7 @@
 A small, dependency-free guided tour for React: dim the page, ring the element
 you are talking about, show a callout, step through.
 
-**[Live demo →](https://<user>.github.io/react-spotlight-tour/)**
+**[Live demo →](https://nuiaz.github.io/react-spotlight-tour/)**
 
 - **Zero runtime dependencies.** React is a peer dependency; nothing else ships.
 - **Router-agnostic.** No router import. A step declares a `route`, you supply an
@@ -24,8 +24,12 @@ you are talking about, show a callout, step through.
 
 ## Install
 
+Not on npm yet; install straight from GitHub (npm resolves the repo and runs the
+build via the `prepare` script), or just copy the source: the whole library is
+`src/` plus one stylesheet, with zero runtime dependencies.
+
 ```bash
-npm install react-spotlight-tour
+npm install github:NUIAZ/react-spotlight-tour
 ```
 
 ## Quick start
@@ -52,7 +56,7 @@ export default function App() {
 ```
 
 That is the whole integration. Mount `<SpotlightTour>` once near the root and
-call `startTour()` from anywhere — it is a plain function, not a context value,
+call `startTour()` from anywhere; it is a plain function, not a context value,
 so a replay button in a lazily-loaded help page needs no plumbing.
 
 > **Tip:** prefer `data-tour="…"` attributes over class-name selectors. Classes
@@ -76,21 +80,21 @@ operate on the same state.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `steps` | `TourStep[]` | — | **Required.** The steps, in order. Treated as stable — define at module scope or memoise it. |
+| `steps` | `TourStep[]` | - | **Required.** The steps, in order. Treated as stable; define at module scope or memoise it. |
 | `autoStart` | `boolean` | `false` | Play the tour once for readers who have not seen this version. Off by default; a library that ambushes people gets removed. |
-| `autoStartWhen` | `string` | — | CSS selector that must exist before auto-start fires. Use it to wait for real content rather than a loading skeleton. |
+| `autoStartWhen` | `string` | - | CSS selector that must exist before auto-start fires. Use it to wait for real content rather than a loading skeleton. |
 | `autoStartTimeoutMs` | `number` | `8000` | Ceiling on that wait. If the gate never opens, the tour stays quiet. |
-| `persist` | `boolean` | `true` | Whether the library reads/writes the "has seen" flag. `false` opts out entirely — see [Persistence](#persistence). |
+| `persist` | `boolean` | `true` | Whether the library reads/writes the "has seen" flag. `false` opts out entirely; see [Persistence](#persistence). |
 | `storageKey` | `string` | `'react-spotlight-tour'` | Namespace for the flag. |
-| `version` | `number` | `1` | Version of the walkthrough. Bumping re-plays it for everyone — see [Persistence](#persistence). |
+| `version` | `number` | `1` | Version of the walkthrough. Bumping re-plays it for everyone; see [Persistence](#persistence). |
 | `resolveTimeoutMs` | `number` | `2500` | Grace period for a step's target to appear before the step is skipped. |
 | `spotlightPadding` | `number` | `8` | Breathing room between the target's box and the ring, in px. |
-| `currentRoute` | `string` | — | The route your app is on. Compared against `step.route`. |
-| `onNavigate` | `(route: string) => void` | — | Called when a step lives on another route. See [Router recipes](#router-recipes). |
-| `onStepChange` | `(step: TourStep, index: number) => void` | — | Fires on every step, including the first. Handy for analytics. |
-| `onFinish` | `(reason: 'completed' \| 'dismissed') => void` | — | Fires once when the tour ends. |
+| `currentRoute` | `string` | - | The route your app is on. Compared against `step.route`. |
+| `onNavigate` | `(route: string) => void` | - | Called when a step lives on another route. See [Router recipes](#router-recipes). |
+| `onStepChange` | `(step: TourStep, index: number) => void` | - | Fires on every step, including the first. Handy for analytics. |
+| `onFinish` | `(reason: 'completed' \| 'dismissed') => void` | - | Fires once when the tour ends. |
 | `labels` | `Partial<TourLabels>` | English | Overrides for every user-visible string. |
-| `className` | `string` | — | Extra class on the overlay root — the hook for scoped theming. |
+| `className` | `string` | - | Extra class on the overlay root, the hook for scoped theming. |
 | `container` | `HTMLElement \| null` | `document.body` | Portal host. |
 | `closeOnScrimClick` | `boolean` | `false` | End the tour when the dimmed background is clicked. |
 | `showProgress` | `boolean` | `true` | Show the progress pips. |
@@ -105,7 +109,7 @@ operate on the same state.
 | `content` | `string \| ReactNode` | **Required.** Callout body. |
 | `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | Preferred side. Defaults to `'bottom'`. Flips automatically when it would overflow. |
 | `route` | `string` | Route this step lives on. Handed to `onNavigate`; never interpreted by this library. |
-| `onEnter` | `(ctx: TourStepContext) => void` | Runs when the step becomes current, **before** its target is looked up — so it can open the drawer that contains it. |
+| `onEnter` | `(ctx: TourStepContext) => void` | Runs when the step becomes current, **before** its target is looked up, so it can open the drawer that contains it. |
 | `onExit` | `(ctx: TourStepContext) => void` | Runs when the step stops being current, however it is left. |
 | `spotlightPadding` | `number` | Per-step override of the ring padding. |
 
@@ -125,7 +129,7 @@ function Progress() {
 ```
 
 The action functions are module-level singletons, so they are referentially
-stable forever — safe in dependency arrays and safe to pass to memoised
+stable forever: safe in dependency arrays and safe to pass to memoised
 children without wrapping.
 
 ### Keyboard
@@ -142,7 +146,7 @@ children without wrapping.
 ## Theming
 
 Everything is a CSS custom property. Override them wherever you win the
-cascade — `:root` for a global look, or a class passed via `className` for a
+cascade: `:root` for a global look, or a class passed via `className` for a
 scoped variant.
 
 ```css
@@ -159,7 +163,7 @@ scoped variant.
   --rst-callout-width: 380px;
   --rst-radius: 12px;             /* the spotlight ring's corner radius */
   --rst-ring-thickness: 2px;
-  --rst-scrim-spread: 200vmax;    /* how far the wash extends — see below */
+  --rst-scrim-spread: 200vmax;    /* how far the wash extends; see below */
   --rst-z-index: 1500;
   --rst-transition: 0.25s ease;
   --rst-font: inherit;
@@ -175,7 +179,7 @@ If your app already has design tokens, point the properties at them
 UI for free.
 
 **How the hole is made:** the spotlight is a single absolutely-positioned box
-carrying an enormous `box-shadow` spread — everything outside the box gets the
+carrying an enormous `box-shadow` spread; everything outside the box gets the
 wash, the box itself stays untouched. One element, so it animates cleanly
 between targets, and it degrades to "everything dimmed" rather than to
 "nothing dimmed" if the geometry is ever wrong.
@@ -197,7 +201,7 @@ from the `currentRoute` prop, the tour calls `onNavigate(route)` and waits for
 `currentRoute` to change before it starts hunting for the target.
 
 **Routing is entirely optional.** Omit `route`, `currentRoute` and `onNavigate`
-and every step simply runs wherever the reader already is — which is the right
+and every step simply runs wherever the reader already is, which is the right
 setup for a single-page dashboard or a settings dialog.
 
 ### react-router
@@ -253,7 +257,7 @@ const router = useRouter();
 
 ### Anything else
 
-Any router works — the contract is only "tell me where I am, and I will tell you
+Any router works: the contract is only "tell me where I am, and I will tell you
 where I want to go". Raise `resolveTimeoutMs` if your route transitions are slow
 enough that a target might not exist within the default 2.5 seconds.
 
@@ -278,7 +282,7 @@ back on the next page load, and replay is always one button away.
 ### When to bump `version`
 
 Bumping changes the key, which makes the tour auto-play once more for
-*everyone* — including people who deliberately dismissed it. That is a real
+*everyone*, including people who deliberately dismissed it. That is a real
 interruption, so spend it only when the tour genuinely teaches something new:
 
 - a page or major feature was added, removed or moved;
@@ -324,7 +328,7 @@ Accessibility is the headline feature, not a checklist item at the end.
   `aria-modal="true"`, `aria-labelledby` pointing at the step title and
   `aria-describedby` at its body. The accessible name is therefore always the
   thing the reader is being told about.
-- **Focus moves into the callout** on every step and is **trapped** there —
+- **Focus moves into the callout** on every step and is **trapped** there:
   Tab and Shift+Tab cycle the controls, and focus that has escaped (a stray
   click on the page beneath) is pulled back on the next Tab.
 - **Focus is restored** to whatever was focused before the tour started, so a
@@ -343,7 +347,7 @@ Accessibility is the headline feature, not a checklist item at the end.
   scrim click all end the tour, and the callout renders even when no target
   resolves. Trapping someone inside an onboarding overlay is the one
   unforgivable bug in this category of component.
-- **The progress pips are `aria-hidden`** — the step count text beside them
+- **The progress pips are `aria-hidden`**: the step count text beside them
   already carries the same information in words.
 
 ### Text and copy
@@ -375,7 +379,7 @@ The behaviours that stop a tour becoming a support ticket:
   appear; if it does not, the tour continues in the reader's direction of
   travel. Walking off the end finishes; walking off the start is ignored.
 - **Reposition on resize and scroll**, with the scroll listener in the capture
-  phase — page content usually scrolls inside an inner container, and those
+  phase: page content usually scrolls inside an inner container, and those
   events never bubble to `window`.
 - **Targets that vanish mid-step** (a re-render, a data reload) drop the ring
   rather than leaving it stranded over empty page.

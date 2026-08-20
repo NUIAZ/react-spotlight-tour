@@ -1,5 +1,5 @@
 /**
- * "Has this person already seen the tour?" — the versioned localStorage flag.
+ * "Has this person already seen the tour?", the versioned localStorage flag.
  *
  * Two rules govern everything in this file:
  *
@@ -22,7 +22,7 @@ export const DEFAULT_STORAGE_KEY = 'react-spotlight-tour';
  * ## When to bump the version
  *
  * Bumping changes the key, which makes the tour auto-play once more for
- * *everyone* — including people who deliberately dismissed it. That is a real
+ * *everyone*, including people who deliberately dismissed it. That is a real
  * interruption, so spend it only when the tour genuinely teaches something new:
  *
  * - a page or major feature was added, removed or moved;

@@ -4,7 +4,7 @@
  * WHY, since a provider is the reflexive answer:
  *
  * 1. **Replay buttons are scattered.** A "show me around again" control
- *    typically sits in a top bar, a help page and an empty state — three
+ *    typically sits in a top bar, a help page and an empty state: three
  *    different subtrees, often lazily loaded. A provider would have to wrap all
  *    of them, which in practice means wrapping the whole app and threading a
  *    context through code that has nothing to do with tours. A 30-line
@@ -15,7 +15,7 @@
  *    a plain DOM event listener can start the tour without being a component.
  *
  * The trade-off is that exactly one `<SpotlightTour>` should be mounted at a
- * time — which is true of any modal overlay anyway, and is documented.
+ * time, which is true of any modal overlay anyway, and is documented.
  *
  * Consumed through `useSyncExternalStore`, so the snapshot object is replaced
  * (never mutated) on every change: React compares snapshots by identity and
@@ -106,7 +106,7 @@ export function getTourServerState(): TourState {
 /**
  * Starts (or restarts) the tour from the given step.
  *
- * A no-op has no way to fail loudly here — if no `<SpotlightTour>` is mounted,
+ * A no-op has no way to fail loudly here: if no `<SpotlightTour>` is mounted,
  * the state simply flips and nothing renders. That is the right behaviour for a
  * replay button on a page that renders before the overlay mounts; throwing
  * would turn a cosmetic ordering issue into a crash.

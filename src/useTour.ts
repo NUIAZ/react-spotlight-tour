@@ -1,5 +1,5 @@
 /**
- * `useTour()` — the React-facing view of the module-level store.
+ * `useTour()`: the React-facing view of the module-level store.
  *
  * The imperative functions (`startTour`, `stopTour`) are usable from anywhere,
  * including outside React. This hook exists for the cases where a component
@@ -46,7 +46,7 @@ export function useTour(): TourApi {
   };
 }
 
-// Hoisted so `useTour()` returns the same function identities on every call —
+// Hoisted so `useTour()` returns the same function identities on every call;
 // inline arrows would defeat memoisation in any consumer that depends on them.
 const NEXT = (): void => moveTour(1);
 const BACK = (): void => moveTour(-1);

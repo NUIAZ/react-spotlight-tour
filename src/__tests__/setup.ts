@@ -2,7 +2,7 @@
  * Vitest setup: the jsdom gaps this library actually depends on.
  *
  * Only three things are stubbed, and each is stubbed because jsdom genuinely
- * does not implement it — not to make an assertion easier.
+ * does not implement it, not to make an assertion easier.
  */
 import '@testing-library/jest-dom/vitest';
 import { afterEach, beforeEach, vi } from 'vitest';

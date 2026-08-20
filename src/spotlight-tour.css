@@ -1,5 +1,5 @@
 /**
- * react-spotlight-tour — the entire stylesheet.
+ * react-spotlight-tour: the entire stylesheet.
  *
  * Import it once, anywhere:
  *
@@ -16,7 +16,7 @@
  *
  * Every colour, size and duration is a `--rst-*` custom property with a
  * sensible default via `var(--x, fallback)`. Override them anywhere that wins
- * the cascade — `:root` for global theming, or a class passed through the
+ * the cascade: `:root` for global theming, or a class passed through the
  * `className` prop for a scoped variant:
  *
  *   .my-brand-tour {
@@ -36,7 +36,7 @@
  * would paint straight over the outer wash.
  *
  * The spread is `200vmax`, **not** a fixed `9999px`. That is not a style
- * preference — it is a performance fix. A 9999px spread asks the compositor to
+ * preference; it is a performance fix. A 9999px spread asks the compositor to
  * rasterise a ~20000x20000px shadow, and because the ring animates between
  * targets it has to do so repeatedly; on a large or high-DPI display that is
  * gigabytes of raster work per transition and it will visibly wedge the main
@@ -116,7 +116,7 @@
 }
 
 /* Focus lands here on every step. The card is already the loudest thing on the
-   screen, so a focus ring on it would be noise — the controls inside keep
+   screen, so a focus ring on it would be noise; the controls inside keep
    theirs, which is where a keyboard user actually needs the signal. */
 .rst-callout:focus {
   outline: none;

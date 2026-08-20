@@ -81,7 +81,7 @@ describe('SpotlightTour', () => {
   it('moves forward with Next and back with Back', async () => {
     await renderAndStart();
 
-    // Back is unusable on the first step — the reader cannot fall off the start.
+    // Back is unusable on the first step; the reader cannot fall off the start.
     expect(screen.getByTestId('spotlight-tour-back')).toBeDisabled();
 
     fireEvent.click(screen.getByTestId('spotlight-tour-next'));
@@ -433,7 +433,7 @@ describe('SpotlightTour', () => {
     const ring = await screen.findByTestId('spotlight-tour-ring');
 
     // jsdom has no layout, so the assertion is that the listener is wired and
-    // the ring survives the event — a resize handler that threw would fail here.
+    // the ring survives the event: a resize handler that threw would fail here.
     act(() => {
       window.dispatchEvent(new Event('resize'));
     });

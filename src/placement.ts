@@ -4,7 +4,7 @@
  * Kept as a pure function of (target box, card size, viewport, preference)
  * deliberately: given those four inputs there is exactly one right answer, and
  * pulling it out of the component means the rules can be reasoned about and
- * tested without a DOM — jsdom reports every element as 0x0, so a
+ * tested without a DOM: jsdom reports every element as 0x0, so a
  * render-and-assert test of placement would prove nothing at all.
  */
 import type { ResolvedPlacement, TourPlacement } from './types';
@@ -48,7 +48,7 @@ function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(value, Math.max(min, max)));
 }
 
-/** The side a flip goes to first — the natural mirror of the preference. */
+/** The side a flip goes to first, the natural mirror of the preference. */
 const OPPOSITE: Record<TourPlacement, TourPlacement> = {
   top: 'bottom',
   bottom: 'top',
@@ -62,7 +62,7 @@ const OPPOSITE: Record<TourPlacement, TourPlacement> = {
  *
  * Search order is preference → its opposite → the remaining sides. The first
  * side that fits entirely inside the viewport (minus a margin) wins. If nothing
- * fits — a tall card next to a target in the middle of a short window — the
+ * fits (a tall card next to a target in the middle of a short window), the
  * preference is kept and simply pulled back into view: overlapping the target
  * is annoying, hanging off the edge of the screen is broken.
  */
@@ -74,7 +74,7 @@ export function placeCallout(
   spotlightPadding: number = DEFAULT_SPOTLIGHT_PADDING,
 ): CalloutPosition {
   // A viewport that cannot contain the card plus its margins has no "beside"
-  // to speak of. Centering is always readable, so it is the honest fallback —
+  // to speak of. Centering is always readable, so it is the honest fallback;
   // as it is when no target has resolved yet.
   const tooSmall =
     viewport.width < callout.width + 2 * VIEWPORT_MARGIN ||
