@@ -9,6 +9,11 @@ you are talking about, show a callout, step through.
 
 **[Live demo →](https://nuiaz.github.io/react-spotlight-tour/)**
 
+<p align="center">
+  <img src="docs/tour.gif" width="760" alt="The tour stepping through a dashboard: page dims, a ring highlights the navigation, then the metric tiles, then the chart, with a callout and progress pips at each step">
+</p>
+<p align="center"><sub>The live demo, stepping itself. Stills: <a href="docs/hero.png">light</a> · <a href="docs/hero-dark.png">dark</a>. Regenerate with <code>scripts/screenshots.mjs</code> + <code>scripts/make-gif.py</code>.</sub></p>
+
 - **Zero runtime dependencies.** React is a peer dependency; nothing else ships.
 - **Router-agnostic.** No router import. A step declares a `route`, you supply an
   `onNavigate` callback. Works fine with no router at all.
